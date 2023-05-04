@@ -1,0 +1,6 @@
+{
+	"name": "com.darkyon.statemachine.editor",
+	"references": [
+        "com.darkyon.statemachine.runtime"
+    ]
+}
