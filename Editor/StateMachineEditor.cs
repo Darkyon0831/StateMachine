@@ -170,6 +170,9 @@ namespace StateMachine
                             if (j != i)
                             {
                                 SerializedObject oD = new SerializedObject(states.GetArrayElementAtIndex(j).objectReferenceValue);
+
+                                oD.Update();
+
                                 SerializedProperty d = oD.FindProperty("isDefault");
                                 d.boolValue = false;
 
