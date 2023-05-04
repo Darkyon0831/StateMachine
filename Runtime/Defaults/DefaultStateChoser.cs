@@ -9,6 +9,7 @@ public class DefaultStateChoser : StateChoser
     public override int Chose(in List<State> states)
     {
         int chosenIndex = -1;
+        int defaultStateIndex = -1;
 
         if (lastState != null)
         {
@@ -36,8 +37,13 @@ public class DefaultStateChoser : StateChoser
 
                     break;
                 }
+                else if (state.IsDefault)
+                    defaultStateIndex = i;
             }
         }
+
+        if (chosenIndex == -1 && defaultStateIndex != -1)
+            chosenIndex = defaultStateIndex;
 
         return chosenIndex;
     }

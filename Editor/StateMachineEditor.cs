@@ -14,6 +14,7 @@ namespace StateMachine
         SerializedProperty container;
         SerializedProperty states;
         SerializedProperty choser;
+        SerializedProperty isDefault;
 
         GUIStyle addStyle;
         Texture2D addTexture;
@@ -112,7 +113,8 @@ namespace StateMachine
             float totalElementHeight = 22.5f * arrayLength;
             float selectionBoxWidth = 26;
             float selectionBoxHeight = 16;
-            float elementWidth = (width - selectionBoxWidth) / 3.0f - 7.0f;
+            float isDefaultWidth = 32;
+            float elementWidth = (width - selectionBoxWidth - isDefaultWidth) / 3.0f - 7.0f;
 
             GUILayout.BeginArea(new Rect(30, 45, width, 15.0f + totalElementHeight + 15.0f), EditorStyles.helpBox);
             EditorGUILayout.BeginHorizontal();
@@ -121,6 +123,7 @@ namespace StateMachine
             GUILayout.Label("Name", GUILayout.Width(elementWidth));
             GUILayout.Label("Conditioner", GUILayout.Width(elementWidth));
             GUILayout.Label("Executer", GUILayout.Width(elementWidth));
+            GUILayout.Label("D", GUILayout.Width(isDefaultWidth));
 
             EditorGUILayout.EndHorizontal();
 
@@ -137,6 +140,7 @@ namespace StateMachine
                     SerializedProperty conditioner = o.FindProperty("conditioner");
                     SerializedProperty executer = o.FindProperty("executer");
                     SerializedProperty name = o.FindProperty("name");
+                    SerializedProperty isDefault = o.FindProperty("isDefault");
 
                     if (selectedIndex == i)
                     {
@@ -151,10 +155,28 @@ namespace StateMachine
 
                     EditorGUILayout.BeginHorizontal(stateStyle, GUILayout.Height(20));
 
+                    bool dValue = isDefault.boolValue;
+
                     EditorGUILayout.LabelField("", selectionBoxStyle, GUILayout.Width(selectionBoxWidth), GUILayout.Height(selectionBoxHeight));
                     EditorGUILayout.PropertyField(name, GUIContent.none, GUILayout.Width(elementWidth));
                     EditorGUILayout.PropertyField(conditioner, GUIContent.none, GUILayout.Width(elementWidth));
                     EditorGUILayout.PropertyField(executer, GUIContent.none, GUILayout.Width(elementWidth));
+                    EditorGUILayout.PropertyField(isDefault, GUIContent.none, GUILayout.Width(isDefaultWidth));
+
+                    if (dValue != isDefault.boolValue)
+                    {
+                        for (int j = 0; j < arrayLength; j++)
+                        {
+                            if (j != i)
+                            {
+                                SerializedObject oD = new SerializedObject(states.GetArrayElementAtIndex(j).objectReferenceValue);
+                                SerializedProperty d = oD.FindProperty("isDefault");
+                                d.boolValue = false;
+
+                                oD.ApplyModifiedProperties();
+                            }     
+                        }
+                    }
 
                     EditorGUILayout.EndHorizontal();
 
@@ -190,7 +212,7 @@ namespace StateMachine
                     states.DeleteArrayElementAtIndex(selectedIndex);
                     selectedIndex = -1;
                 }
-                else
+                else if (arrayLength > 0)
                     states.DeleteArrayElementAtIndex(arrayLength - 1);
             }
 

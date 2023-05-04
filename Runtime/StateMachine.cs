@@ -14,6 +14,20 @@ namespace StateMachine
         public ParameterContainer ParameterContainer { get { return parameterContainer; } set { parameterContainer = value; } }
         public StateChoser StateChoser { get { return stateChoser; } set { stateChoser = value; } }
 
+        public void SetDefaultState(int index)
+        {
+            if (index >= 0 && index < states.Count)
+            {
+                states[index].IsDefault = true;
+
+                for (int i = 0; i < states.Count; i++)
+                {
+                    if (i != index)
+                        states[i].IsDefault = false;
+                }
+            }
+        }
+
         public void AddState(StateConditioner conditioner = null, StateExecuter executer = null)
         {
             State state = ScriptableObject.CreateInstance<State>();
@@ -23,7 +37,7 @@ namespace StateMachine
             states.Add(state);
         }
 
-        private void Start()
+        void Start()
         {
             if (stateChoser == null)
                 stateChoser = gameObject.AddComponent<DefaultStateChoser>();

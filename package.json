@@ -1,6 +1,6 @@
 {
     "name": "com.darkyon.statemachine",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A general use State Machine, To be used in different kind of logic.",
     "displayName": "State Machine",
     "author": {

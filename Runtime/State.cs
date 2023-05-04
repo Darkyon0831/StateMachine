@@ -8,9 +8,12 @@ namespace StateMachine
         [SerializeField] new string name;
         [SerializeField] StateConditioner conditioner;
         [SerializeField] StateExecuter executer;
+        [SerializeField] bool isDefault = false;
 
         public StateConditioner Conditioner { set { conditioner = value; } }
         public StateExecuter Executer { set { executer = value; } }
+
+        public bool IsDefault { get { return isDefault; } set { isDefault = value; } }
 
         public void Run()
         {
