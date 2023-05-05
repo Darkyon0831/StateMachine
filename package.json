@@ -1,11 +1,19 @@
 {
-    "name": "com.darkyon.statemachine",
-    "version": "1.0.1",
-    "description": "A general use State Machine, To be used in different kind of logic.",
-    "displayName": "State Machine",
-    "author": {
-        "name": "Adrian Rondahl",
-        "email": "adrian.rondahl@live.se"
-    },
-    "keywords": ["State", "Machine", "State Machine", "Adrian", "Rondahl", "Adrian Rondahl"]
+  "name": "com.darkyon.statemachine",
+  "version": "1.0.2",
+  "description": "A general use State Machine, To be used in different kind of logic.",
+  "displayName": "State Machine",
+  "author": {
+    "name": "Adrian Rondahl",
+    "email": "adrian.rondahl@live.se"
+  },
+  "keywords": [
+    "State",
+    "Machine",
+    "State Machine",
+    "Adrian",
+    "Rondahl",
+    "Adrian Rondahl"
+  ],
+  "unity": "2021.3"
 }

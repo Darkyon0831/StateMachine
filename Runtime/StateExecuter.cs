@@ -4,6 +4,10 @@ namespace StateMachine
     {
         public string stateName { protected get; set; }
 
-        public abstract void Run();
+        public virtual void PreRun() { }
+
+        public virtual void Run() { }
+
+        public virtual void PostRun() { }
     }
 }

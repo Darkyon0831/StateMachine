@@ -18,7 +18,11 @@ namespace StateMachine
         public void Run()
         {
             if (executer != null)
+            {
+                executer.PreRun();
                 executer.Run();
+                executer.PostRun();
+            }
         }
 
         public bool Check()
