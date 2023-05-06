@@ -11,6 +11,8 @@ namespace StateMachine
         [SerializeField] List<State> states;
         [SerializeField] StateChoser stateChoser;
 
+        int lastActiveState = -1;
+
         public ParameterContainer ParameterContainer { get { return parameterContainer; } set { parameterContainer = value; } }
         public StateChoser StateChoser { get { return stateChoser; } set { stateChoser = value; } }
 
@@ -40,7 +42,7 @@ namespace StateMachine
         void Start()
         {
             if (stateChoser == null)
-                stateChoser = gameObject.AddComponent<DefaultStateChoser>();
+                stateChoser = gameObject.AddComponent<BeginAndEndChoser>();
 
             if (parameterContainer == null)
                 parameterContainer = gameObject.AddComponent<DefaultStateParameters>();
@@ -55,8 +57,16 @@ namespace StateMachine
 
                 if (choseIndex >= 0 && choseIndex < states.Count)
                 {
-                    states[choseIndex].UpdateState(parameterContainer);
-                    states[choseIndex].Run();
+                    State state = states[choseIndex];
+
+                    if (lastActiveState != -1)
+                        states[lastActiveState].IsActive = false;
+
+                    state.UpdateState(parameterContainer);
+                    state.Run();
+
+                    state.IsActive = true;
+                    lastActiveState = choseIndex;
                 }
             }
         }

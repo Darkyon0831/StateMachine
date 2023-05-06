@@ -30,6 +30,7 @@ namespace StateMachine
         Texture2D stateHover;
         Texture2D stateSelected;
         Texture2D stateNormal;
+        Texture2D stateActive;
 
         GUIStyle selectionBoxStyle;
         Texture2D selectionBoxTexture;
@@ -43,6 +44,7 @@ namespace StateMachine
             Color statesColor;
             Color stateHoverColor;
             Color stateSelectedColor;
+            Color stateActiveColor = Color.green;
             ColorUtility.TryParseHtmlString("#404040", out statesColor);
             ColorUtility.TryParseHtmlString("#545454", out stateHoverColor);
             ColorUtility.TryParseHtmlString("#363636", out stateSelectedColor);
@@ -50,6 +52,7 @@ namespace StateMachine
             stateHover = new Texture2D(1, 1);
             stateSelected = new Texture2D(1, 1);
             stateNormal = new Texture2D(1, 1);
+            stateActive = new Texture2D(1, 1);
 
             addTexture = Resources.Load<Texture2D>("NormalAdd");
             removeTexture = Resources.Load<Texture2D>("NormalRemove");
@@ -70,6 +73,9 @@ namespace StateMachine
 
             stateNormal.SetPixels(new Color[] { statesColor });
             stateNormal.Apply();
+
+            stateActive.SetPixels(new Color[] { stateActiveColor });
+            stateActive.Apply();
 
             addStyle = new GUIStyle();
             addStyle.normal.background = addTexture;
@@ -141,6 +147,9 @@ namespace StateMachine
                     SerializedProperty executer = o.FindProperty("executer");
                     SerializedProperty name = o.FindProperty("name");
                     SerializedProperty isDefault = o.FindProperty("isDefault");
+                    SerializedProperty isActive = o.FindProperty("isActive");
+
+
 
                     if (selectedIndex == i)
                     {
@@ -149,7 +158,11 @@ namespace StateMachine
                     }
                     else
                     {
-                        stateStyle.normal.background = stateNormal;
+                        if (isActive.boolValue == true)
+                            stateStyle.normal.background = stateActive;
+                        else
+                            stateStyle.normal.background = stateNormal;
+
                         stateStyle.hover.background = stateHover;
                     }
 

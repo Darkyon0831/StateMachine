@@ -1,7 +1,7 @@
 using StateMachine;
 using System.Collections.Generic;
 
-public class DefaultStateChoser : StateChoser
+public class OnlyBeginChoser : StateChoser
 {
     State lastState = null;
     int lastIndex = 0;
@@ -13,7 +13,7 @@ public class DefaultStateChoser : StateChoser
 
         if (lastState != null)
         {
-            if (lastState.Check())
+            if (lastState.Begin())
                 chosenIndex = lastIndex;
             else
                 lastState = null;
@@ -28,7 +28,7 @@ public class DefaultStateChoser : StateChoser
                 if (state == null) continue;
 
                 state.UpdateState(parameter);
-                if (state.Check())
+                if (state.Begin())
                 {
                     chosenIndex = i;
 
